@@ -23,6 +23,15 @@ if (exclude) {
   exclude = exclude.split(',');
 }
 
+for(var i = 0, l = exclude.length; i < l; i++) {
+  var currentExclude = exclude[i];
+  if (currentExclude[0] === '/') {
+    var lastSlash = currentExclude.lastIndexOf('/');
+    var matchPattern = currentExclude.substr(1, lastSlash -1);
+    exclude[i] = new RegExp(matchPattern);
+  }
+}
+
 jscoverage.processFile(source, dest, exclude, {});
 
 function helpInfo() {
